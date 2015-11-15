@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tommy.dao.LotteryLogDao" >
+  <resultMap id="lotBaseResultMap" type="com.tommy.model.LotteryLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_no" property="startNo" jdbcType="INTEGER" />
+    <result column="data_name" property="dataName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="reverse" property="reverse" jdbcType="VARCHAR" />
+    <result column="radio" property="radio" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="query" parameterType="java.util.Map" resultMap="lotBaseResultMap" >
+    select * from t_lottery_log
+    <trim prefix="where" prefixOverrides="and"> 
+    <if test="startNo != null" >
+      	and start_no=#{startNo}
+    </if>
+    <if test="dataName != null" >
+      	and data_name like  CONCAT('%','${dataName}','%' )  
+    </if>
+    order by position asc,id desc
+    </trim>
+  </select>
+</mapper>

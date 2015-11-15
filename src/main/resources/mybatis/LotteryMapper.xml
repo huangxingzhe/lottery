@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tommy.dao.LotteryMapper" >
+  <resultMap id="BaseResultMap" type="com.tommy.model.Lottery" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_no" property="startNo" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="zero" property="zero" jdbcType="INTEGER" />
+    <result column="one" property="one" jdbcType="INTEGER" />
+    <result column="two" property="two" jdbcType="INTEGER" />
+    <result column="three" property="three" jdbcType="INTEGER" />
+    <result column="four" property="four" jdbcType="INTEGER" />
+    <result column="five" property="five" jdbcType="INTEGER" />
+    <result column="six" property="six" jdbcType="INTEGER" />
+    <result column="seven" property="seven" jdbcType="INTEGER" />
+    <result column="eight" property="eight" jdbcType="INTEGER" />
+    <result column="nine" property="nine" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, start_no, type, zero, one, two, three, four, five, six, seven, eight, nine, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tommy.model.LotteryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_lottery
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit == null" >
+      <if test="limitStart gt 0 and limitEnd gt 0 " >
+        limit ${limitStart} , ${limitEnd}
+      </if>
+      <if test="limitStart lt 1 and limitEnd lt 0 " >
+        limit ${limitEnd}
+      </if>
+    </if>
+    <if test=" limit != null " >
+      limit ${limit.start} , ${limit.size}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_lottery
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_lottery
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tommy.model.LotteryExample" >
+    delete from t_lottery
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tommy.model.Lottery" keyProperty="id" useGeneratedKeys="true" >
+    insert into t_lottery (id, start_no, type, 
+      zero, one, two, three, 
+      four, five, six, seven, 
+      eight, nine, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{startNo,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{zero,jdbcType=INTEGER}, #{one,jdbcType=INTEGER}, #{two,jdbcType=INTEGER}, #{three,jdbcType=INTEGER}, 
+      #{four,jdbcType=INTEGER}, #{five,jdbcType=INTEGER}, #{six,jdbcType=INTEGER}, #{seven,jdbcType=INTEGER}, 
+      #{eight,jdbcType=INTEGER}, #{nine,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tommy.model.Lottery" keyProperty="id" useGeneratedKeys="true" >
+    insert into t_lottery
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="startNo != null" >
+        start_no,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="zero != null" >
+        zero,
+      </if>
+      <if test="one != null" >
+        one,
+      </if>
+      <if test="two != null" >
+        two,
+      </if>
+      <if test="three != null" >
+        three,
+      </if>
+      <if test="four != null" >
+        four,
+      </if>
+      <if test="five != null" >
+        five,
+      </if>
+      <if test="six != null" >
+        six,
+      </if>
+      <if test="seven != null" >
+        seven,
+      </if>
+      <if test="eight != null" >
+        eight,
+      </if>
+      <if test="nine != null" >
+        nine,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="startNo != null" >
+        #{startNo,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="zero != null" >
+        #{zero,jdbcType=INTEGER},
+      </if>
+      <if test="one != null" >
+        #{one,jdbcType=INTEGER},
+      </if>
+      <if test="two != null" >
+        #{two,jdbcType=INTEGER},
+      </if>
+      <if test="three != null" >
+        #{three,jdbcType=INTEGER},
+      </if>
+      <if test="four != null" >
+        #{four,jdbcType=INTEGER},
+      </if>
+      <if test="five != null" >
+        #{five,jdbcType=INTEGER},
+      </if>
+      <if test="six != null" >
+        #{six,jdbcType=INTEGER},
+      </if>
+      <if test="seven != null" >
+        #{seven,jdbcType=INTEGER},
+      </if>
+      <if test="eight != null" >
+        #{eight,jdbcType=INTEGER},
+      </if>
+      <if test="nine != null" >
+        #{nine,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tommy.model.LotteryExample" resultType="java.lang.Integer" >
+    select count(*) from t_lottery
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_lottery
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.startNo != null" >
+        start_no = #{record.startNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.zero != null" >
+        zero = #{record.zero,jdbcType=INTEGER},
+      </if>
+      <if test="record.one != null" >
+        one = #{record.one,jdbcType=INTEGER},
+      </if>
+      <if test="record.two != null" >
+        two = #{record.two,jdbcType=INTEGER},
+      </if>
+      <if test="record.three != null" >
+        three = #{record.three,jdbcType=INTEGER},
+      </if>
+      <if test="record.four != null" >
+        four = #{record.four,jdbcType=INTEGER},
+      </if>
+      <if test="record.five != null" >
+        five = #{record.five,jdbcType=INTEGER},
+      </if>
+      <if test="record.six != null" >
+        six = #{record.six,jdbcType=INTEGER},
+      </if>
+      <if test="record.seven != null" >
+        seven = #{record.seven,jdbcType=INTEGER},
+      </if>
+      <if test="record.eight != null" >
+        eight = #{record.eight,jdbcType=INTEGER},
+      </if>
+      <if test="record.nine != null" >
+        nine = #{record.nine,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_lottery
+    set id = #{record.id,jdbcType=INTEGER},
+      start_no = #{record.startNo,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      zero = #{record.zero,jdbcType=INTEGER},
+      one = #{record.one,jdbcType=INTEGER},
+      two = #{record.two,jdbcType=INTEGER},
+      three = #{record.three,jdbcType=INTEGER},
+      four = #{record.four,jdbcType=INTEGER},
+      five = #{record.five,jdbcType=INTEGER},
+      six = #{record.six,jdbcType=INTEGER},
+      seven = #{record.seven,jdbcType=INTEGER},
+      eight = #{record.eight,jdbcType=INTEGER},
+      nine = #{record.nine,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tommy.model.Lottery" >
+    update t_lottery
+    <set >
+      <if test="startNo != null" >
+        start_no = #{startNo,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="zero != null" >
+        zero = #{zero,jdbcType=INTEGER},
+      </if>
+      <if test="one != null" >
+        one = #{one,jdbcType=INTEGER},
+      </if>
+      <if test="two != null" >
+        two = #{two,jdbcType=INTEGER},
+      </if>
+      <if test="three != null" >
+        three = #{three,jdbcType=INTEGER},
+      </if>
+      <if test="four != null" >
+        four = #{four,jdbcType=INTEGER},
+      </if>
+      <if test="five != null" >
+        five = #{five,jdbcType=INTEGER},
+      </if>
+      <if test="six != null" >
+        six = #{six,jdbcType=INTEGER},
+      </if>
+      <if test="seven != null" >
+        seven = #{seven,jdbcType=INTEGER},
+      </if>
+      <if test="eight != null" >
+        eight = #{eight,jdbcType=INTEGER},
+      </if>
+      <if test="nine != null" >
+        nine = #{nine,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tommy.model.Lottery" >
+    update t_lottery
+    set start_no = #{startNo,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      zero = #{zero,jdbcType=INTEGER},
+      one = #{one,jdbcType=INTEGER},
+      two = #{two,jdbcType=INTEGER},
+      three = #{three,jdbcType=INTEGER},
+      four = #{four,jdbcType=INTEGER},
+      five = #{five,jdbcType=INTEGER},
+      six = #{six,jdbcType=INTEGER},
+      seven = #{seven,jdbcType=INTEGER},
+      eight = #{eight,jdbcType=INTEGER},
+      nine = #{nine,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
